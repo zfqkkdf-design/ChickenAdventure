@@ -13,8 +13,8 @@ workflows:
         PACKAGE_NAME: "com.example.runnertemplate"
         VERSION_CODE: 1
         VERSION_NAME: "1.0.0"
-      android_signing:
-        - keystore_reference
+      # android_signing:  # Убрано - не требуется до билда
+      #   - keystore_reference
       node: 20.18.0
     scripts:
       - name: Install Godot
@@ -32,9 +32,9 @@ workflows:
           cd $CM_BUILD_DIR
           # Создаем директорию для билда
           mkdir -p build
-          # Экспортируем Android проект через headless режим
+          # Экспортируем Android проект через headless режим (debug версия без подписи)
           # Используем абсолютный путь для выходного файла
-          godot --headless --export-release "Android" "$CM_BUILD_DIR/build/RunnerTemplate.apk" --path .
+          godot --headless --export-debug "Android" "$CM_BUILD_DIR/build/RunnerTemplate.apk" --path .
           if [ ! -f "build/RunnerTemplate.apk" ]; then
             echo "Error: APK file was not created"
             exit 1
@@ -56,4 +56,3 @@ workflows:
           script: |
             echo "Publishing artifacts..."
             ls -la build/
-
