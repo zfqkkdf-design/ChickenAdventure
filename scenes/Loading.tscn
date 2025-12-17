@@ -1,0 +1,78 @@
+[gd_scene load_steps=6 format=3 uid="uid://kk1kcmvmon3r"]
+
+[ext_resource type="Script" uid="uid://cd2jmlhf23b2g" path="res://scripts/LoadingScreen.gd" id="1_rx3dl"]
+[ext_resource type="Texture2D" uid="uid://c0qn8jwv7vqoi" path="res://assets/background/Group.png" id="2_5d8b5"]
+[ext_resource type="Texture2D" uid="uid://chvik5jf6nqme" path="res://assets/background/icon/ChatGPT Image 16 дек. 2025 г., 18_29_22 1.png" id="3_y56h7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2"]
+bg_color = Color(0.5, 0.7, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Loading" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rx3dl")
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+
+[node name="Background" type="TextureRect" parent="BackgroundLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_5d8b5")
+stretch_mode = 5
+
+[node name="LogoLayer" type="CanvasLayer" parent="."]
+
+[node name="Logo" type="TextureRect" parent="LogoLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -179.0
+offset_top = -119.5
+offset_right = 179.0
+offset_bottom = 119.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_y56h7")
+stretch_mode = 4
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="ProgressBar" type="ProgressBar" parent="UILayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -187.0
+offset_top = -77.0
+offset_right = 193.0
+offset_bottom = -56.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_1")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2")

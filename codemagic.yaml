@@ -1,0 +1,59 @@
+workflows:
+  android-workflow:
+    name: Android Build
+    max_build_duration: 120
+    instance_type: linux_x2
+    environment:
+      groups:
+        - codemagic
+      vars:
+        GODOT_VERSION: "4.5"
+        PROJECT_PATH: "."
+        EXPORT_PRESET: "Android"
+        PACKAGE_NAME: "com.example.runnertemplate"
+        VERSION_CODE: 1
+        VERSION_NAME: "1.0.0"
+      android_signing:
+        - keystore_reference
+      node: 20.18.0
+    scripts:
+      - name: Install Godot
+        script: |
+          echo "Installing Godot ${GODOT_VERSION}..."
+          cd /tmp
+          wget -q https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
+          unzip -q Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip
+          chmod +x Godot_v${GODOT_VERSION}-stable_linux.x86_64/Godot_v${GODOT_VERSION}-stable_linux.x86_64
+          sudo mv Godot_v${GODOT_VERSION}-stable_linux.x86_64/Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/local/bin/godot
+          godot --version
+      - name: Export Android Project
+        script: |
+          echo "Exporting Android project..."
+          cd $CM_BUILD_DIR
+          # Создаем директорию для билда
+          mkdir -p build
+          # Экспортируем Android проект через headless режим
+          # Используем абсолютный путь для выходного файла
+          godot --headless --export-release "Android" "$CM_BUILD_DIR/build/RunnerTemplate.apk" --path .
+          if [ ! -f "build/RunnerTemplate.apk" ]; then
+            echo "Error: APK file was not created"
+            exit 1
+          fi
+          echo "APK exported successfully"
+          ls -lh build/
+    artifacts:
+      - build/*.apk
+      - build/*.aab
+    publishing:
+      email:
+        recipients:
+          - user@example.com
+        notify:
+          success: true
+          failure: true
+      scripts:
+        - name: Publish to Codemagic
+          script: |
+            echo "Publishing artifacts..."
+            ls -la build/
+

@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://seed12345678"]
+
+[ext_resource type="Script" uid="uid://v83bhkmxm3er" path="res://scripts/Collectible.gd" id="1_1"]
+[ext_resource type="Texture2D" uid="uid://81awofudhg3t" path="res://assets/obstacle bonus/Group 823.png" id="2_seed"]
+
+[sub_resource type="RectangleShape2D" id="1_rect"]
+size = Vector2(35, 35)
+
+[node name="Seed" type="Area2D"]
+script = ExtResource("1_1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_seed")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("1_rect")

@@ -1,0 +1,558 @@
+[gd_scene load_steps=18 format=3 uid="uid://vnrpx7wg8ftc"]
+
+[ext_resource type="Script" uid="uid://dby60suis42j2" path="res://scripts/Game.gd" id="1_1"]
+[ext_resource type="PackedScene" uid="uid://b3k4m5n6p7q8" path="res://scenes/Player.tscn" id="1_2"]
+[ext_resource type="Texture2D" uid="uid://budpx4nour7v7" path="res://assets/background/background game/Group (2).png" id="2_road"]
+[ext_resource type="Texture2D" uid="uid://c5sjbmarrqw10" path="res://assets/background/background game/Frame 10.png" id="3_hearts"]
+[ext_resource type="Texture2D" uid="uid://cpbc2wycp8max" path="res://assets/ui/Group 811.png" id="4_pause"]
+[ext_resource type="Texture2D" uid="uid://cmk45nvainepp" path="res://assets/ui/Group 821.png" id="5_controls"]
+[ext_resource type="Texture2D" uid="uid://n58vwubsaorl" path="res://assets/obstacle bonus/image 1951.png" id="6_egg"]
+[ext_resource type="FontFile" uid="uid://bgwms2w82cyjx" path="res://font/DynaPuff-Bold.ttf" id="7_font"]
+[ext_resource type="Texture2D" uid="uid://5n4g4qr1sm4u" path="res://assets/sunmoon/Group 822.png" id="8_sun"]
+[ext_resource type="Texture2D" uid="uid://c56qolqldn6ce" path="res://assets/sunmoon/Group 830.png" id="9_moon"]
+[ext_resource type="Texture2D" uid="uid://c7sb1qt82a54l" path="res://assets/background/background game/Group (5).png" id="10_cloud"]
+[ext_resource type="Texture2D" uid="uid://dawwk8nuy3xvs" path="res://assets/background/background game/Group (7).png" id="11_background"]
+[ext_resource type="Texture2D" uid="uid://dhd06mwsy2sxq" path="res://assets/background/pause/Group 814.png" id="12_restart"]
+[ext_resource type="Texture2D" uid="uid://bsb31pmgsvxm" path="res://assets/background/pause/Group 815 (1).png" id="13_home"]
+[ext_resource type="Texture2D" uid="uid://dl3o2yyu2ywkm" path="res://assets/background/pause/Group 818.png" id="14_resume"]
+
+[sub_resource type="Gradient" id="Gradient_1"]
+colors = PackedColorArray(1, 1, 0.431, 1, 1, 1, 0.886, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1"]
+gradient = SubResource("Gradient_1")
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
+
+[node name="Game" type="Node2D"]
+process_mode = 3
+script = ExtResource("1_1")
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+
+[node name="SkyBackground" type="ColorRect" parent="BackgroundLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SkyGradient" type="TextureRect" parent="BackgroundLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_1")
+stretch_mode = 6
+
+[node name="Cloud" type="Sprite2D" parent="BackgroundLayer"]
+position = Vector2(400, 150)
+texture = ExtResource("10_cloud")
+
+[node name="SunMoonLayer" type="Node2D" parent="BackgroundLayer"]
+
+[node name="Sun" type="Sprite2D" parent="BackgroundLayer/SunMoonLayer"]
+position = Vector2(-100, 200)
+texture = ExtResource("8_sun")
+
+[node name="Moon" type="Sprite2D" parent="BackgroundLayer/SunMoonLayer"]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(900, 200)
+texture = ExtResource("9_moon")
+
+[node name="NightOverlay" type="ColorRect" parent="BackgroundLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="Road" type="TextureRect" parent="BackgroundLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -406.0
+offset_top = -59.0
+offset_right = 406.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("2_road")
+stretch_mode = 6
+
+[node name="GroundBackground" type="TextureRect" parent="BackgroundLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -406.0
+offset_top = -150.0
+offset_right = 406.0
+offset_bottom = -59.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("11_background")
+stretch_mode = 6
+
+[node name="GameplayLayer" type="CanvasLayer" parent="."]
+
+[node name="Player" parent="GameplayLayer" instance=ExtResource("1_2")]
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 2
+process_mode = 3
+
+[node name="PauseButton" type="TextureButton" parent="UI"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 65.0
+offset_bottom = 65.0
+texture_normal = ExtResource("4_pause")
+
+[node name="TopBar" type="HBoxContainer" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -200.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 100.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="ScoreDisplay" type="HBoxContainer" parent="UI/TopBar"]
+layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="UI/TopBar/ScoreDisplay"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_font")
+theme_override_font_sizes/font_size = 24
+text = "0"
+
+[node name="EggIcon" type="TextureRect" parent="UI/TopBar/ScoreDisplay"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+texture = ExtResource("6_egg")
+stretch_mode = 4
+
+[node name="HeartsContainer" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -100.0
+offset_top = 20.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HeartsSprite" type="Sprite2D" parent="UI/HeartsContainer"]
+position = Vector2(100, 50)
+texture = ExtResource("3_hearts")
+
+[node name="ControlsContainer" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -150.0
+offset_right = 120.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="UpButton" type="Button" parent="UI/ControlsContainer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -59.0
+offset_top = -144.0
+offset_right = 57.0
+offset_bottom = -93.0
+grow_horizontal = 2
+grow_vertical = 0
+flat = true
+
+[node name="DownButton" type="Button" parent="UI/ControlsContainer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -59.0
+offset_right = 54.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+flat = true
+
+[node name="ControlsTexture" type="TextureRect" parent="UI/ControlsContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -11.0
+offset_top = -19.0
+offset_right = 12.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("5_controls")
+stretch_mode = 4
+
+[node name="PauseOverlay" type="ColorRect" parent="UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.85)
+
+[node name="PausePanel" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -400.0
+offset_right = 300.0
+offset_bottom = 400.0
+grow_horizontal = 2
+grow_vertical = 2
+process_mode = 3
+
+[node name="Background" type="TextureRect" parent="UI/PausePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 215.5
+offset_right = 1.0
+offset_bottom = -214.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 4
+
+[node name="PauseLabel" type="Label" parent="UI/PausePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -157.0
+offset_top = -185.5
+offset_right = 143.0
+offset_bottom = -85.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("7_font")
+theme_override_font_sizes/font_size = 72
+text = "PAUSE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreContainer" type="HBoxContainer" parent="UI/PausePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -203.5
+offset_top = -45.75
+offset_right = 203.5
+offset_bottom = 45.75
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CurrentScore" type="HBoxContainer" parent="UI/PausePanel/ScoreContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CurrentScoreLabel" type="Label" parent="UI/PausePanel/ScoreContainer/CurrentScore"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_font")
+theme_override_font_sizes/font_size = 36
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CurrentScoreIcon" type="TextureRect" parent="UI/PausePanel/ScoreContainer/CurrentScore"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("6_egg")
+stretch_mode = 4
+
+[node name="VSeparator" type="VSeparator" parent="UI/PausePanel/ScoreContainer"]
+layout_mode = 2
+
+[node name="BestScore" type="HBoxContainer" parent="UI/PausePanel/ScoreContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BestScoreLabel" type="Label" parent="UI/PausePanel/ScoreContainer/BestScore"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_font")
+theme_override_font_sizes/font_size = 36
+text = "BEST: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BestScoreIcon" type="TextureRect" parent="UI/PausePanel/ScoreContainer/BestScore"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("6_egg")
+stretch_mode = 4
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="UI/PausePanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = 50.0
+offset_right = 200.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+theme_override_constants/separation = 20
+
+[node name="HomeButton" type="TextureButton" parent="UI/PausePanel/ButtonsContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture_normal = ExtResource("13_home")
+stretch_mode = 5
+
+[node name="RestartButton" type="TextureButton" parent="UI/PausePanel/ButtonsContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture_normal = ExtResource("12_restart")
+stretch_mode = 5
+
+[node name="ResumeButton" type="TextureButton" parent="UI/PausePanel/ButtonsContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture_normal = ExtResource("14_resume")
+stretch_mode = 5
+
+[node name="BottomButtons" type="HBoxContainer" parent="UI/PausePanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 150.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+theme_override_constants/separation = 20
+
+[node name="SoundButton" type="TextureButton" parent="UI/PausePanel/BottomButtons"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture_normal = ExtResource("13_home")
+stretch_mode = 4
+
+[node name="MusicButton" type="TextureButton" parent="UI/PausePanel/BottomButtons"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture_normal = ExtResource("13_home")
+stretch_mode = 4
+
+[node name="GameOverOverlay" type="ColorRect" parent="UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.85)
+
+[node name="GameOverPanel" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -400.0
+offset_right = 300.0
+offset_bottom = 400.0
+grow_horizontal = 2
+grow_vertical = 2
+process_mode = 3
+
+[node name="Background" type="TextureRect" parent="UI/GameOverPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 215.5
+offset_right = 1.0
+offset_bottom = -214.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 4
+
+[node name="GameOverLabel" type="Label" parent="UI/GameOverPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -157.0
+offset_top = -185.5
+offset_right = 143.0
+offset_bottom = -85.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("7_font")
+theme_override_font_sizes/font_size = 72
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreContainer" type="HBoxContainer" parent="UI/GameOverPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -203.5
+offset_top = -45.75
+offset_right = 203.5
+offset_bottom = 45.75
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CurrentScore" type="HBoxContainer" parent="UI/GameOverPanel/ScoreContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CurrentScoreLabel" type="Label" parent="UI/GameOverPanel/ScoreContainer/CurrentScore"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_font")
+theme_override_font_sizes/font_size = 36
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CurrentScoreIcon" type="TextureRect" parent="UI/GameOverPanel/ScoreContainer/CurrentScore"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("6_egg")
+stretch_mode = 4
+
+[node name="VSeparator" type="VSeparator" parent="UI/GameOverPanel/ScoreContainer"]
+layout_mode = 2
+
+[node name="BestScore" type="HBoxContainer" parent="UI/GameOverPanel/ScoreContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BestScoreLabel" type="Label" parent="UI/GameOverPanel/ScoreContainer/BestScore"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_font")
+theme_override_font_sizes/font_size = 36
+text = "BEST: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BestScoreIcon" type="TextureRect" parent="UI/GameOverPanel/ScoreContainer/BestScore"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("6_egg")
+stretch_mode = 4
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="UI/GameOverPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = 50.0
+offset_right = 200.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+theme_override_constants/separation = 20
+
+[node name="HomeButton" type="TextureButton" parent="UI/GameOverPanel/ButtonsContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture_normal = ExtResource("13_home")
+stretch_mode = 5
+
+[node name="RestartButton" type="TextureButton" parent="UI/GameOverPanel/ButtonsContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture_normal = ExtResource("12_restart")
+stretch_mode = 5
+
+[node name="BottomButtons" type="HBoxContainer" parent="UI/GameOverPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 150.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+theme_override_constants/separation = 20
+
+[node name="SoundButton" type="TextureButton" parent="UI/GameOverPanel/BottomButtons"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture_normal = ExtResource("13_home")
+stretch_mode = 4
+
+[node name="MusicButton" type="TextureButton" parent="UI/GameOverPanel/BottomButtons"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+texture_normal = ExtResource("13_home")
+stretch_mode = 4

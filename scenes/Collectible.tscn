@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://e5f6g7h8jaj0"]
+
+[ext_resource type="Script" uid="uid://v83bhkmxm3er" path="res://scripts/Collectible.gd" id="1_1"]
+
+[sub_resource type="RectangleShape2D" id="1_rect"]
+size = Vector2(35, 35)
+
+[node name="Collectible" type="Area2D"]
+script = ExtResource("1_1")
+
+[node name="Sprite" type="Polygon2D" parent="."]
+color = Color(1, 1, 0.95, 1)
+polygon = PackedVector2Array(-17.5, -17.5, 17.5, -17.5, 17.5, 17.5, -17.5, 17.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("1_rect")
